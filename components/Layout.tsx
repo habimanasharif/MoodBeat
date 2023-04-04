@@ -1,12 +1,9 @@
+import React from 'react';
 
-import Index from "./layout/index"
-
-const Layout:React.FC<{ children: React.ReactNode }>=({children })=> {
-  return (<div>
-    <Index />
+const Layout:React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div className="layout-bg h-screen ">
     {children}
-  </div>)
+  </div>
+);
 
-}
-
-export default Layout
+export default Layout;

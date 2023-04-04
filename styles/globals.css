@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body{
+    background-image:url("../public/body-bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    
+}
+
+.layout-bg{
+    filter:blur(0px) saturate(180%) ;
+    background-color:rgba(43, 46, 55, 100) ;
+    
+}
+.transparent-White{
+    background: rgba(251, 251, 251, 0.12);
+}
+.add-btn{
+    background-image: linear-gradient(to right,rgba(255, 0, 0, 0) 20%, rgba(251, 251, 251, 0.12) 100%);
+}
