@@ -15,7 +15,7 @@ const SideBar = () => {
       href: '/',
     },
     {
-      icon: <NoteIcon />,
+      icon: <NoteIcon size="20" />,
       label: 'Music',
       href: '/music',
 
