@@ -39,6 +39,14 @@ body{
     right:0;
     top:0;
 }
+.pin-dot{
+    right:1rem;
+    top:0;
+    gap:.2rem
+}
+.active-dot{
+height:1rem !important ;
+}
 .pin-t{
 top:0;
 }
