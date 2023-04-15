@@ -68,3 +68,6 @@ top:0;
 .bg-blur{
     backdrop-filter: blur(3.1px);
 }
+.elipse{
+    gap: 0.1em;
+}

@@ -1,7 +1,6 @@
 import React from 'react';
 import Banner from './Banner';
 import ExploreHeader from './ExploreHeader';
-import SongCard from './SongCard';
 import Songs from './Songs';
 
 const Explore = () => (
@@ -10,7 +9,6 @@ const Explore = () => (
       <ExploreHeader />
       <Banner />
       <Songs />
-      <SongCard />
     </div>
   </div>
 );
