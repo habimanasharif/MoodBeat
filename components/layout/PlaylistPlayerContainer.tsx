@@ -25,7 +25,7 @@ const PlaylistPlayerContainer = () => {
   ];
 
   return (
-    <div className="w-[45%] pr-[4.6rem]  h-[80%] ">
+    <div className="w-[45%] pr-[4.6rem]  h-[80%] flex flex-col ">
       <div className="w-[100%] flex flex-no-rwap overflow-x-auto flex-gap ">
         <div />
         {
