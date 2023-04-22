@@ -3,6 +3,7 @@ import PlaylistItem from './PlaylistItem';
 import one from '../../public/one.jpg';
 import two from '../../public/two.jpg';
 import three from '../../public/three.jpg';
+import Player from './Player';
 
 const PlaylistPlayerContainer = () => {
   const playlists = [
@@ -39,6 +40,7 @@ const PlaylistPlayerContainer = () => {
         }
 
       </div>
+      <Player />
     </div>
   );
 };
