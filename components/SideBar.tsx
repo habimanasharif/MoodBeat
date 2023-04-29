@@ -6,6 +6,7 @@ import FolderIcon from './svg/Folder';
 import HomeIcon from './svg/Home';
 import NoteIcon from './svg/Note';
 import SettingIcon from './svg/Setting';
+import { useAppDispatch } from '@/Redux/hooks';
 
 const SideBar = () => {
   const items = [

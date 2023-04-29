@@ -4,8 +4,8 @@ import two from '../../public/two.jpg';
 
 const Player = () => (
   <div className="w-full  d-flex justify-center  flex-grow flex  justify-center">
-    <div className="w-[60%] player-bg rounded-[2rem] shadow h-full">
-      <div className="w-1/6 px-[1.5rem] h-[2rem]">
+    <div className="w-[60%] player-bg rounded-[2rem] shadow h-full flex items-center flex-col py-6">
+      <div className=" px-[1.5rem]  h-[10rem] w-[15rem]">
         <div className="w-[100%] h-[100%] relative rounded-[.7rem]  ">
           <div>
             <Image

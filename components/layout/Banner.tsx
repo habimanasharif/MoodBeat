@@ -24,7 +24,7 @@ const Banner = () => {
     }
   ];
   return (
-    <div className="mt-4 h-[16rem] relative">
+    <div className="mt-4 h-[140%] relative">
 
       <BannerImage image={playlists[0].image} />
       <div className="flex flex-col absolute h-[100%] justify-center pin-dot items-center">
