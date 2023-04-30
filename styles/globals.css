@@ -76,3 +76,6 @@ top:0;
 .elipse{
     gap: 0.1em;
 }
+.transtion{
+    transition: all 2s ease-out;
+}
