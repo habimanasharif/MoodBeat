@@ -1,8 +1,14 @@
 import React from 'react';
+import FavouriteCard from './FavouriteCard';
 
 const Favorite = () => (
   <div>
-    Recent Favourite
+    <h1>
+      Recent Favourite
+    </h1>
+    <div>
+      <FavouriteCard />
+    </div>
   </div>
 );
 

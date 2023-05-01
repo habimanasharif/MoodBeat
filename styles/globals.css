@@ -55,6 +55,12 @@ height:1rem !important ;
 .pin-t{
 top:0;
 }
+.pin-r{
+    right: 0;
+}
+.pin-b{
+bottom: .5rem;
+}
 .pin-b-playlist{
     bottom: .5em;
 }
@@ -77,5 +83,5 @@ top:0;
     gap: 0.1em;
 }
 .transtion{
-    transition: all 2s ease-out;
+    transition: all .5s ease-out;
 }
