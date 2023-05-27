@@ -1,6 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
 import two from '../../public/two.jpg';
+import PlayIcon from '../svg/play';
+import NextIcon from '../svg/NextIcon';
+import PrevIcon from '../svg/PrevIcon';
+import RepeatIcon from '../svg/Repeat';
+import ShuffleIcon from '../svg/ShuffleIcon';
 
 const Player = () => (
   <div className="w-full  d-flex justify-center  flex-grow flex  justify-center">
@@ -18,6 +23,27 @@ const Player = () => (
           </div>
         </div>
       </div>
+      <div className="details text-center">
+        <h3 className="text-[#fff] mt-1 font-bold text-lg">Resistance</h3>
+        <p className="text-[#fff] font-thin"> Muse</p>
+      </div>
+
+      <div className="player-controllers mt-2 flex items-center">
+        <div>
+          <RepeatIcon />
+        </div>
+        <div className="mr-2 ml-8">
+          <PrevIcon />
+        </div>
+        <div className="bg-[#fff] h-10 w-10 flex shadow items-center justify-center rounded-[50%]"><PlayIcon size="15" /></div>
+        <div className="ml-2 mr-8">
+          <NextIcon />
+        </div>
+        <div>
+          <ShuffleIcon />
+        </div>
+      </div>
+
     </div>
   </div>
 );
