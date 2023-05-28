@@ -85,3 +85,8 @@ bottom: .5rem;
 .transtion{
     transition: all .5s ease-out;
 }
+.pin-player{
+    bottom: -1.4rem;
+    left: 1rem;
+    right:1.4rem
+}
