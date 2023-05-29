@@ -11,7 +11,7 @@ description:string
 
 const PlaylistItem:React.FC<props> = ({ image, title, description }) => (
   <div>
-    <div className=" relative w-[15rem] h-[15rem] rounded-[1.7rem] shadow-lg ">
+    <div className=" relative w-[15rem] h-[15rem] rounded-[1.7rem] shadow-lg ml-2 ">
       <div className="w-[100%] h-[100%] relative rounded-[1.7rem]  ">
         <div>
           <Image

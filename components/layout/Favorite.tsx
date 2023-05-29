@@ -6,8 +6,8 @@ const Favorite = () => (
     <h1>
       Recent Favourite
     </h1>
-    <div className="flex w-full overflow-x-hidden">
-      <div className=" flex flex-wrap w-full flex-shrink-0 overflow-y-auto">
+    <div className="flex w-full overflow-x-hidden flex-grow overflow-y-auto ">
+      <div className=" flex flex-wrap w-full ">
         <FavouriteCard />
         <FavouriteCard />
         <FavouriteCard />
