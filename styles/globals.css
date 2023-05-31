@@ -29,6 +29,9 @@ body{
     background-color:rgba(43, 46, 55, 0.8) ;
     
 }
+.player-conroller-bg{
+    background-color:rgb(25, 25, 34) ; 
+}
 .player-bg{
     filter:blur(0px) saturate(180%) ;
     background-color:rgba(20, 23, 42, 0.5) ;

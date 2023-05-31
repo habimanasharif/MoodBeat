@@ -1,5 +1,9 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/media-has-caption */
+/* eslint-disable brace-style */
 // @ts-nocheck
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PlayIcon from '../svg/play';
 import NextIcon from '../svg/NextIcon';
 import PrevIcon from '../svg/PrevIcon';
@@ -7,42 +11,19 @@ import RepeatIcon from '../svg/Repeat';
 import ShuffleIcon from '../svg/ShuffleIcon';
 
 const PlayerController = () => {
+  const [nomolizedData, setNomolizedData] = useState([]);
+  const song = 'https://beats-api.onrender.com/song/play/882e74e4118ff2552d633f3c47b5d8f7.mp3';
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const getPosition = (e:any) => {
+    e.preventDefault();
+    const canvas = document.querySelector('canvas');
+    const audio = document.getElementById('song');
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    audio.currentTime = (x / (rect.right - rect.left)) * duration;
+  };
   useEffect(() => {
-    // Set up audio context
-    const audioContext = new AudioContext();
-    /**
-     * Filters the AudioBuffer retrieved from an external source
-     * @param {AudioBuffer} audioBuffer the AudioBuffer from drawAudio()
-     * @returns {Array} an array of floating point numbers
-     */
-    const filterData = (audioBuffer:any) => {
-      // We only need to work with one channel of data
-      const rawData = audioBuffer.getChannelData(0);
-      const samples = 350; // Number of samples we want to have in our final data set
-      // the number of samples in each subdivision
-      const blockSize = Math.floor(rawData.length / samples);
-      const filteredData = [];
-      for (let i = 0; i < samples; i++) {
-        const blockStart = blockSize * i; // the location of the first sample in the block
-        let sum = 0;
-        for (let j = 0; j < blockSize; j++) {
-          sum += Math.abs(rawData[blockStart + j]); // find the sum of all the samples in the block
-        }
-        filteredData.push(sum / blockSize); // divide the sum by the block size to get the average
-      }
-      return filteredData;
-    };
-
-    /**
-     * Normalizes the audio data to make a cleaner illustration
-     * @param {Array} filteredData the data from filterData()
-     * @returns {Array} an normalized array of floating point numbers
-     */
-    const normalizeData = (filteredData:any) => {
-      const multiplier = Math.max(...filteredData) ** -1;
-      return filteredData.map((n:number) => n * multiplier);
-    };
-
     /**
      * A utility function for drawing our line segments
      * @param {AudioContext} ctx the audio context
@@ -51,15 +32,30 @@ const PlayerController = () => {
      * @param {number} width the desired width of the line segment
      * @param {boolean} isEven whether or not the segmented is even-numbered
      */
-    const drawLineSegment = (ctx:any, x:number, height:number, width:number, isEven:number) => {
-      ctx.lineWidth = 1; // how thick the line is
-      ctx.strokeStyle = 'white'; // what color our line is
-      // ctx.beginPath();
-      height = isEven ? height : -height;
+    const drawLineSegment = (
+      ctx:any,
+      x:number,
+      height:number,
+      width:number,
+      isEven:number,
+      i:number,
+      location:number
+    ) => {
+      if (i < location) {
+        ctx.strokeStyle = 'red';
+      } else {
+        ctx.strokeStyle = 'white';
+      }
+      if (height > 3) {
+        height = isEven ? height : -height; }
+      else {
+        height = isEven ? height + 7 : -height + 7;
+      }
+
+      ctx.lineWidth = 1;
+      ctx.beginPath();
       ctx.moveTo(x, -height);
       ctx.lineTo(x, height);
-      // ctx.arc(x + width / 2, height, width / 2, Math.PI, 0, isEven);
-      // ctx.lineTo(x + width, 0);
       ctx.stroke();
     };
     /**
@@ -67,7 +63,7 @@ const PlayerController = () => {
      * @param {Array} normalizedData The filtered array returned from filterData()
      * @returns {Array} a normalized array of data
      */
-    const draw = (normalizedData:any) => {
+    const draw = (normalizedData:any, location:number) => {
       // set up the canvas
       const canvas = document.querySelector('canvas');
       const dpr = window.devicePixelRatio || 1;
@@ -89,22 +85,78 @@ const PlayerController = () => {
             } else if (height > canvas!.offsetHeight / 2) {
               height = height > canvas!.offsetHeight / 2;
             }
-            drawLineSegment(ctx, x, height, width, (i + 1) % 2);
+            drawLineSegment(ctx, x, height, width, (i + 1) % 2, i, location);
           }
+    };
+    /**
+     * Retrieves audio from an external source, the initializes the drawing function
+     * @param {array} data nomolized data
+     */
+    const drawAudio = (data:any) => {
+      draw(data, progress);
+    };
+    drawAudio(nomolizedData);
+  }, [nomolizedData, progress]);
+
+  useEffect(() => {
+    // Set up audio context
+    const audioContext = new AudioContext();
+    /**
+       * Filters the AudioBuffer retrieved from an external source
+       * @param {AudioBuffer} audioBuffer the AudioBuffer from drawAudio()
+       * @returns {Array} an array of floating point numbers
+       */
+    const filterData = (audioBuffer:any) => {
+      // We only need to work with one channel of data
+      setDuration(audioBuffer.duration);
+      const rawData = audioBuffer.getChannelData(0);
+      const samples = 70; // Number of samples we want to have in our final data set
+      // the number of samples in each subdivision
+      const blockSize = Math.floor(rawData.length / samples);
+      const filteredData = [];
+      for (let i = 0; i < samples; i++) {
+        const blockStart = blockSize * i; // the location of the first sample in the block
+        let sum = 0;
+        for (let j = 0; j < blockSize; j++) {
+          sum += Math.abs(rawData[blockStart + j]); // find the sum of all the samples in the block
+        }
+        filteredData.push(sum / blockSize); // divide the sum by the block size to get the average
+      }
+      return filteredData;
     };
 
     /**
-     * Retrieves audio from an external source, the initializes the drawing function
-     * @param {String} url the url of the audio we'd like to fetch
-     */
-    const drawAudio = (url:string) => {
+       * Normalizes the audio data to make a cleaner illustration
+       * @param {Array} filteredData the data from filterData()
+       * @returns {Array} an normalized array of floating point numbers
+       */
+    const normalizeData = (filteredData:any) => {
+      const multiplier = Math.max(...filteredData) ** -1;
+      return filteredData.map((n:number) => n * multiplier);
+    };
+
+    const getFrequency = (url:string) => {
       fetch(url)
         .then((response) => response.arrayBuffer())
         .then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
-        .then((audioBuffer) => draw(normalizeData(filterData(audioBuffer))));
+        .then((audioBuffer) => setNomolizedData(normalizeData(filterData(audioBuffer))));
     };
-    drawAudio('https://beats-api.onrender.com/song/play/882e74e4118ff2552d633f3c47b5d8f7.mp3');
+    getFrequency(song);
   }, []);
+
+  useEffect(() => {
+    const audio = document.getElementById('song');
+    const updateProgress = (e:any) => {
+      const { currentTime } = e.srcElement;
+      setProgress(Math.floor((currentTime / duration) * 70) + 1);
+    };
+    audio.addEventListener('timeupdate', updateProgress);
+  }, [progress, duration]);
+  const playsong = (e:any) => {
+    e.preventDefault();
+    const audio = document.getElementById('song');
+    audio.play();
+  };
   return (
     <div>
       <div className="details text-center">
@@ -119,7 +171,7 @@ const PlayerController = () => {
         <div className="mr-2 ml-8">
           <PrevIcon />
         </div>
-        <div className="bg-[#fff] h-10 w-10 flex shadow items-center justify-center rounded-[50%]"><PlayIcon size="15" /></div>
+        <div className="bg-[#fff] h-10 w-10 flex shadow items-center justify-center rounded-[50%]" onClick={playsong}><PlayIcon size="15" /></div>
         <div className="ml-2 mr-8">
           <NextIcon />
         </div>
@@ -127,11 +179,14 @@ const PlayerController = () => {
           <ShuffleIcon />
         </div>
       </div>
-      <div className="absolute pin-player flex bg-[red] rounded-[1rem] px-1 items-center">
-        <div className="font-bold">2:00</div>
-        <canvas id="canvas" className="w-[90%] h-[3rem] font-thin  " />
-        <div className="font-bold">4:00</div>
+      <div className="absolute pin-player flex player-conroller-bg rounded-[1rem] px-1 items-center">
+        <div className="font-bold text-white text-xs">2:45</div>
+        <canvas id="canvas" className="w-[90%] h-[3rem] font-thin ml-1 mr-1  " onMouseDown={getPosition} />
+        <div className="font-bold text-white text-xs">4:00</div>
       </div>
+      <audio id="song">
+        <source src={song} type="audio/mpeg" />
+      </audio>
     </div>
 
   );
