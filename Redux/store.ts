@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import exploreData from './data/exploreData';
+import uiData from './data/uiData';
 
 const store = configureStore({
   reducer: {
-    exploreData
+    exploreData,
+    uiData
   },
 });
 export type RootState=ReturnType<typeof store.getState>
