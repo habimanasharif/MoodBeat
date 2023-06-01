@@ -19,17 +19,17 @@ const SongCard = () => (
         </div>
       </div>
     </div>
-    <div className="w-1/2">
+    <div className="w-1/2 text-white sm:text-black">
       <h1 className="font-bold">The dark side</h1>
       <h6 className="font-thin text-xs">David Gueta & Bebe Raxha</h6>
     </div>
     <div className="w-1/6 text-xs sm:block hidden font-bold">03:14</div>
     <div className="w-1/6 font-thin sm:block hidden text-xs">80234</div>
-    <div className="w-1/6"><HeartIcon /></div>
+    <div className="w-1/6"><HeartIcon color="#fff" /></div>
     <div className="w-1/7 flex justify-center elipse">
-      <div className=" h-[.3rem] w-[.3rem] rounded-full bg-black" />
-      <div className=" h-[.3rem] w-[.3rem] rounded-full bg-black" />
-      <div className=" h-[.3rem] w-[.3rem] rounded-full bg-black" />
+      <div className=" h-[.3rem] w-[.3rem] rounded-full bg-white sm:bg-black" />
+      <div className=" h-[.3rem] w-[.3rem] rounded-full bg-white sm:bg-black" />
+      <div className=" h-[.3rem] w-[.3rem] rounded-full bg-white sm:bg-black" />
     </div>
 
   </div>

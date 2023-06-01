@@ -52,7 +52,7 @@ const NavBarBottom = () => {
     }
   ];
   return (
-    <div className=" z-50 drop-shadow-2xl pin-b left-[20%] h-[3.5rem] w-[60%]  absolute w-1 bottom-navbar-bg sm:hidden block rounded-[2rem]">
+    <div className=" z-50 drop-shadow-2xl pin-b left-[5%] h-[3.5rem] w-[90%]  absolute w-1 bottom-navbar-bg sm:hidden block rounded-[2rem]">
       <div className="flex  justify-center h-[100%] items-center">
         {items.map((item, id) => (
           <SideBarItem

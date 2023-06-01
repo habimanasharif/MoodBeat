@@ -31,7 +31,7 @@ const PlaylistPlayerContainer = () => {
   ];
 
   return (
-    <div className="w-[100%] sm:w-[45%]  pr-[.1rem] sm:pr-[4.6rem]  sm:h-[80%] h-screen  flex flex-col ">
+    <div className="w-[100%] sm:w-[45%]  pr-[.1rem] sm:pr-[4.6rem]  sm:h-[80%] h-screen  flex flex-col  hidden ">
       <PlaylistItemList playlists={playlists} />
       <Player />
     </div>

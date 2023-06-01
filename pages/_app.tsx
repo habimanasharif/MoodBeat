@@ -7,6 +7,7 @@ import PlaylistPlayer from '@/components/layout/PlaylistPlayerContainer';
 import store from '@/Redux/store';
 import { Provider } from 'react-redux';
 import NavBarBottom from '@/components/layout/NavBarBottom';
+import MobileExplore from '@/components/layout/MobileExplore';
 
 const App = () => (
   <Provider store={store}>
@@ -18,7 +19,12 @@ const App = () => (
       <Layout>
         <NewPlaylist />
         <PlaylistPlayer />
-        <Explore />
+        <div className="hidden sm:block">
+          <Explore />
+        </div>
+        <div className="block sm:hidden">
+          <MobileExplore />
+        </div>
       </Layout>
     </div>
   </Provider>

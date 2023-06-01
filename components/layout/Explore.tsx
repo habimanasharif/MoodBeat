@@ -8,8 +8,8 @@ import MoreExploreContent from './MoreExploreContent';
 const Explore = () => {
   const { panelSize } = useAppSelector((state) => state.exploreData);
   return (
-    <div className={`absolute pin-x w-[${panelSize}%]  sm:px-2 sm:py-2 transtion  h-full overflow-hidden`}>
-      <div className="w-[100%] h-full bg-[#fff] py-8 px-12 sm:rounded-[2rem] overflow-hidden ">
+    <div className={`absolute pin-x w-[${panelSize}%]  px-2 py-2 transtion  h-full overflow-hidden`}>
+      <div className="w-[100%] h-full bg-[#fff] py-8 px-12 rounded-[2rem] overflow-hidden ">
         <ExploreHeader />
         <div className="flex">
           <div className=" flex  flex-col flex-grow">
