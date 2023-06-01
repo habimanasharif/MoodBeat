@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/media-has-caption */
@@ -9,20 +10,16 @@ import NextIcon from '../svg/NextIcon';
 import PrevIcon from '../svg/PrevIcon';
 import RepeatIcon from '../svg/Repeat';
 import ShuffleIcon from '../svg/ShuffleIcon';
+import PauseIcon from '../svg/Pause';
 
 const PlayerController = () => {
   const [nomolizedData, setNomolizedData] = useState([]);
   const song = 'https://beats-api.onrender.com/song/play/882e74e4118ff2552d633f3c47b5d8f7.mp3';
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
-  const getPosition = (e:any) => {
-    e.preventDefault();
-    const canvas = document.querySelector('canvas');
-    const audio = document.getElementById('song');
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    audio.currentTime = (x / (rect.right - rect.left)) * duration;
-  };
+  const [playing, setPlaying] = useState(false);
+  const [endTime, setEndTime] = useState('00:00');
+  const [curTime, setCurTime] = useState('00:00');
   useEffect(() => {
     /**
      * A utility function for drawing our line segments
@@ -109,6 +106,18 @@ const PlayerController = () => {
     const filterData = (audioBuffer:any) => {
       // We only need to work with one channel of data
       setDuration(audioBuffer.duration);
+      let sec;
+      if (Math.floor(duration) >= 60) {
+        for (let i = 1; i <= 60; i++) {
+          if (Math.floor(duration) >= (60 * i) && Math.floor(duration) < (60 * (i + 1))) {
+            sec = Math.floor(duration) - (60 * i);
+          }
+        }
+      } else {
+        sec = isNaN(duration) === true ? 0 : Math.floor(duration);
+      }
+      const min = isNaN(duration) === true ? 0 : Math.floor(duration / 60);
+      setEndTime(`${min}:${sec < 10 ? `0${sec}` : sec}`);
       const rawData = audioBuffer.getChannelData(0);
       const samples = 70; // Number of samples we want to have in our final data set
       // the number of samples in each subdivision
@@ -142,20 +151,50 @@ const PlayerController = () => {
         .then((audioBuffer) => setNomolizedData(normalizeData(filterData(audioBuffer))));
     };
     getFrequency(song);
-  }, []);
+  }, [endTime, duration]);
 
   useEffect(() => {
     const audio = document.getElementById('song');
     const updateProgress = (e:any) => {
       const { currentTime } = e.srcElement;
+      let curSec;
+      if (Math.floor(currentTime) >= 60) {
+        for (let x = 1; x <= 60; x++) {
+          if (Math.floor(currentTime) >= (60 * x) && Math.floor(currentTime) < (60 * (x + 1))) {
+            curSec = Math.floor(currentTime) - (60 * x);
+          }
+        }
+      } else {
+        curSec = Math.floor(currentTime);
+      }
+      const curMin = Math.floor(currentTime / 60);
+      setCurTime(`${curMin}:${curSec < 10 ? `0${curSec}` : curSec}`);
+
       setProgress(Math.floor((currentTime / duration) * 70) + 1);
     };
     audio.addEventListener('timeupdate', updateProgress);
   }, [progress, duration]);
+
   const playsong = (e:any) => {
     e.preventDefault();
     const audio = document.getElementById('song');
+    setPlaying(true);
     audio.play();
+  };
+  const pausesong = (e:any) => {
+    e.preventDefault();
+    const audio = document.getElementById('song');
+    setPlaying(false);
+    audio.pause();
+  };
+
+  const getPosition = (e:any) => {
+    e.preventDefault();
+    const canvas = document.querySelector('canvas');
+    const audio = document.getElementById('song');
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    audio.currentTime = (x / (rect.right - rect.left)) * duration;
   };
   return (
     <div>
@@ -171,7 +210,12 @@ const PlayerController = () => {
         <div className="mr-2 ml-8">
           <PrevIcon />
         </div>
-        <div className="bg-[#fff] h-10 w-10 flex shadow items-center justify-center rounded-[50%]" onClick={playsong}><PlayIcon size="15" /></div>
+        {!playing && (<div className="bg-[#fff] h-10 w-10 flex shadow items-center justify-center rounded-[50%]" onClick={playsong}><PlayIcon size="15" /></div>)}
+        {playing && (
+        <div className="bg-[#fff] h-10 w-10 flex shadow items-center justify-center rounded-[50%]" onClick={pausesong}>
+          <PauseIcon />
+        </div>
+        )}
         <div className="ml-2 mr-8">
           <NextIcon />
         </div>
@@ -181,9 +225,9 @@ const PlayerController = () => {
       </div>
       <div className="sm:h-[0re] h-[1rem]" />
       <div className="absolute pin-player flex player-conroller-bg rounded-[1rem] px-1 items-center">
-        <div className="font-bold text-white text-xs">2:45</div>
+        <div className="font-bold text-white text-xs">{curTime}</div>
         <canvas id="canvas" className="w-[90%] h-[3rem] font-thin ml-1 mr-1  " onMouseDown={getPosition} />
-        <div className="font-bold text-white text-xs">4:00</div>
+        <div className="font-bold text-white text-xs">{endTime}</div>
       </div>
       <audio id="song">
         <source src={song} type="audio/mpeg" />
