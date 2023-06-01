@@ -1,12 +1,18 @@
 import React from 'react';
-import PlaylistItem from './PlaylistItem';
 import one from '../../public/one.jpg';
 import two from '../../public/two.jpg';
 import three from '../../public/three.jpg';
 import Player from './Player';
+import PlaylistItemList from './PlaylistItemList';
+
+interface playlist{
+  image:any ;
+  title:string;
+  description:string
+  }
 
 const PlaylistPlayerContainer = () => {
-  const playlists = [
+  const playlists:playlist[] = [
     {
       image: one,
       title: ' The Dark Side',
@@ -25,20 +31,8 @@ const PlaylistPlayerContainer = () => {
   ];
 
   return (
-    <div className="w-[45%] pr-[4.6rem]  h-[80%] flex flex-col ">
-      <div className="w-[100%] h-[44%] flex flex-no-rwap overflow-x-auto flex-gap ">
-        {
-          playlists.map((item, id) => (
-            <PlaylistItem
-              image={item.image}
-              title={item.title}
-              description={item.description}
-              key={id}
-            />
-          ))
-        }
-
-      </div>
+    <div className="w-[100%] sm:w-[45%]  pr-[.1rem] sm:pr-[4.6rem]  sm:h-[80%] h-screen  flex flex-col ">
+      <PlaylistItemList playlists={playlists} />
       <Player />
     </div>
   );

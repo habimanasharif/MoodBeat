@@ -6,11 +6,15 @@ import Explore from '@/components/layout/Explore';
 import PlaylistPlayer from '@/components/layout/PlaylistPlayerContainer';
 import store from '@/Redux/store';
 import { Provider } from 'react-redux';
+import NavBarBottom from '@/components/layout/NavBarBottom';
 
 const App = () => (
   <Provider store={store}>
     <div className="relative">
-      <SideBar />
+      <div className="hidden sm:block">
+        <SideBar />
+      </div>
+      <NavBarBottom />
       <Layout>
         <NewPlaylist />
         <PlaylistPlayer />

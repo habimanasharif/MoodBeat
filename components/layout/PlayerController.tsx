@@ -179,6 +179,7 @@ const PlayerController = () => {
           <ShuffleIcon />
         </div>
       </div>
+      <div className="sm:h-[0re] h-[1rem]" />
       <div className="absolute pin-player flex player-conroller-bg rounded-[1rem] px-1 items-center">
         <div className="font-bold text-white text-xs">2:45</div>
         <canvas id="canvas" className="w-[90%] h-[3rem] font-thin ml-1 mr-1  " onMouseDown={getPosition} />

@@ -37,6 +37,10 @@ body{
     background-color:rgba(20, 23, 42, 0.5) ;
     
 }
+.bottom-navbar-bg{
+    filter:blur(0px) saturate(180%) ;
+    background-color:rgba(20, 23, 42, 0.5) ; 
+}
 .transparent-White{
     background: rgba(251, 251, 251, 0.12);
 }
