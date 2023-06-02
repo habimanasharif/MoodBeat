@@ -1,7 +1,5 @@
 import '@/styles/globals.css';
-import { useEffect } from 'react';
-import { useAppDispatch } from '@/Redux/hooks';
-import { setIsMobile } from '@/Redux/data/uiData';
+import { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import SideBar from '@/components/SideBar';
 import NewPlaylist from '@/components/layout/NewPlaylist';
@@ -12,18 +10,18 @@ import { Provider } from 'react-redux';
 import NavBarBottom from '@/components/layout/NavBarBottom';
 import MobileExplore from '@/components/layout/MobileExplore';
 
-const App = () =>
-  // const dispatch = useAppDispatch();
-  // useEffect(() => {
-  //   window.addEventListener('resize', () => {
-  //     if (window.matchMedia('(min-width: 640px)').matches) {
-  //       dispatch(setIsMobile(false));
-  //     } else {
-  //       dispatch(setIsMobile(true));
-  //     }
-  //   });
-  // });
-  (
+const App = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(min-width: 640px)').matches) {
+        setIsMobile(false);
+      } else {
+        setIsMobile(true);
+      }
+    });
+  });
+  return (
     <Provider store={store}>
       <div className="relative">
         <div className="hidden sm:block">
@@ -31,16 +29,17 @@ const App = () =>
         </div>
         <NavBarBottom />
         <Layout>
-          <NewPlaylist />
-          <PlaylistPlayer />
+          <NewPlaylist isMobile={isMobile} />
+          <PlaylistPlayer isMobile={isMobile} />
           <div className="hidden sm:block">
             <Explore />
           </div>
           <div className="block sm:hidden">
-            <MobileExplore />
+            <MobileExplore isMobile={isMobile} />
           </div>
         </Layout>
       </div>
     </Provider>
   );
+};
 export default App;

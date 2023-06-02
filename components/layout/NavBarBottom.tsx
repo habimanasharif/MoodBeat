@@ -1,4 +1,6 @@
 import React from 'react';
+import { useAppDispatch } from '@/Redux/hooks';
+import { setPage } from '@/Redux/data/uiData';
 import ExploreIcon from '../svg/Explore';
 import FolderIcon from '../svg/Folder';
 import HomeIcon from '../svg/Home';
@@ -7,6 +9,7 @@ import SideBarItem from '../SideBarItem';
 import AddIcon from '../svg/Add';
 
 const NavBarBottom = () => {
+  const dispatch = useAppDispatch();
   const items = [
     {
       icon: <HomeIcon />,
@@ -14,6 +17,7 @@ const NavBarBottom = () => {
       href: '/',
       func: (e:any) => {
         e.preventDefault();
+        dispatch(setPage('home'));
       }
     },
     {
@@ -22,6 +26,7 @@ const NavBarBottom = () => {
       href: '/music',
       func: (e:any) => {
         e.preventDefault();
+        dispatch(setPage('home'));
       }
 
     },
@@ -40,6 +45,7 @@ const NavBarBottom = () => {
       href: '/album',
       func: (e:any) => {
         e.preventDefault();
+        dispatch(setPage('home'));
       }
     },
     {
@@ -48,6 +54,7 @@ const NavBarBottom = () => {
       href: '/explore',
       func: (e:any) => {
         e.preventDefault();
+        dispatch(setPage('explore'));
       }
     }
   ];
