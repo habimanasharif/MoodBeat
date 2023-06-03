@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAppSelector } from '@/Redux/hooks';
 import Image from 'next/image';
-import two from '../../public/two.jpg';
 import PlayerController from './PlayerController';
 
 const Player:React.FC<{isMobile:boolean}> = ({ isMobile }) => {
@@ -13,7 +12,7 @@ const Player:React.FC<{isMobile:boolean}> = ({ isMobile }) => {
           <div className="w-[100%] h-[100%] relative rounded-[.7rem]  ">
             <div>
               <Image
-                src={two}
+                src={musicList[songNumber].cover}
                 alt="album Image"
                 width={500}
                 height={500}
@@ -22,7 +21,11 @@ const Player:React.FC<{isMobile:boolean}> = ({ isMobile }) => {
             </div>
           </div>
         </div>
-        <PlayerController song={musicList[songNumber].audio} title={musicList[songNumber].title} />
+        <PlayerController
+          song={musicList[songNumber].audio}
+          title={musicList[songNumber].title}
+          songNumber={songNumber}
+        />
       </div>
       {!isMobile && (
       <PlayerController

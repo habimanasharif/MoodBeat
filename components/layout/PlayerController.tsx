@@ -5,6 +5,8 @@
 /* eslint-disable brace-style */
 // @ts-nocheck
 import React, { useEffect, useState } from 'react';
+import { useAppDispatch } from '@/Redux/hooks';
+import { setSongNumber } from '@/Redux/data/musicData';
 import PlayIcon from '../svg/play';
 import NextIcon from '../svg/NextIcon';
 import PrevIcon from '../svg/PrevIcon';
@@ -14,10 +16,12 @@ import PauseIcon from '../svg/Pause';
 
 interface props{
   title: string;
-  song:string
+  song:string;
+  songNumber:number;
 }
 
-const PlayerController:React.FC<props> = ({ title, song }) => {
+const PlayerController:React.FC<props> = ({ title, song, songNumber }) => {
+  const dispatch = useAppDispatch();
   const [nomolizedData, setNomolizedData] = useState([]);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -163,7 +167,6 @@ const PlayerController:React.FC<props> = ({ title, song }) => {
       const { currentTime } = e.srcElement;
       if (duration === currentTime) {
         audio.currentTime = 0;
-        console.log('hello');
       }
       let curSec;
       if (Math.floor(currentTime) >= 60) {
@@ -195,6 +198,12 @@ const PlayerController:React.FC<props> = ({ title, song }) => {
     setPlaying(false);
     audio.pause();
   };
+  const nextSong = () => {
+    dispatch(setSongNumber(songNumber + 1));
+  };
+  const prevSong = () => {
+    dispatch(setSongNumber(songNumber - 1));
+  };
 
   const getPosition = (e:any) => {
     e.preventDefault();
@@ -215,7 +224,7 @@ const PlayerController:React.FC<props> = ({ title, song }) => {
         <div>
           <RepeatIcon />
         </div>
-        <div className="mr-2 ml-8">
+        <div className="mr-2 ml-8" onClick={prevSong}>
           <PrevIcon />
         </div>
         {!playing && (<div className="bg-[#fff] h-10 w-10 flex shadow items-center justify-center rounded-[50%]" onClick={playsong}><PlayIcon size="15" /></div>)}
@@ -224,7 +233,7 @@ const PlayerController:React.FC<props> = ({ title, song }) => {
           <PauseIcon />
         </div>
         )}
-        <div className="ml-2 mr-8">
+        <div className="ml-2 mr-8" onClick={nextSong}>
           <NextIcon />
         </div>
         <div>
