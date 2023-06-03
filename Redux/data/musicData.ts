@@ -19,9 +19,14 @@ const initialState:musicList = {
   },
   {
     cover: 'https://www.premadepixels.com/wp-content/uploads/2023/05/Gunz-Roses-PP1.jpg',
-    audio: 'https://beats-api.onrender.com/song/play/30dd0be54b8a9ea94e692dbc1d5e56a5.mp3',
+    audio: 'https://beats-api.onrender.com/song/play/b1100cf488e25d1ed4283ffbf9d89bb0.mp3',
     title: 'One Up'
   },
+  {
+    cover: 'https://www.premadepixels.com/wp-content/uploads/2023/05/Midi-Hits-Free-PP1.jpg',
+    audio: 'https://beats-api.onrender.com/song/play/4239987637a9253ac047e33b3e628417.mpeg',
+    title: 'Hot Shit'
+  }
   ],
   songNumber: 0,
 };

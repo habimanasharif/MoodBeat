@@ -159,7 +159,7 @@ const PlayerController:React.FC<props> = ({ title, song, songNumber }) => {
         .then((audioBuffer) => setNomolizedData(normalizeData(filterData(audioBuffer))));
     };
     getFrequency(song);
-  }, [endTime, duration]);
+  }, [endTime, duration, song]);
 
   useEffect(() => {
     const audio = document.getElementById('song');
@@ -183,8 +183,13 @@ const PlayerController:React.FC<props> = ({ title, song, songNumber }) => {
 
       setProgress(Math.floor((currentTime / duration) * 70) + 1);
     };
+    const onSongEnd = () => {
+      dispatch(setSongNumber(songNumber + 1));
+      audio.play();
+    };
     audio.addEventListener('timeupdate', updateProgress);
-  }, [progress, duration]);
+    audio.addEventListener('ended', onSongEnd);
+  }, [progress, duration, songNumber, song]);
 
   const playsong = (e:any) => {
     e.preventDefault();
@@ -246,9 +251,7 @@ const PlayerController:React.FC<props> = ({ title, song, songNumber }) => {
         <canvas id="canvas" className="w-[90%] h-[3rem] font-thin ml-1 mr-1  " onMouseDown={getPosition} />
         <div className="font-bold text-white text-xs">{endTime}</div>
       </div>
-      <audio id="song">
-        <source src={song} type="audio/mpeg" />
-      </audio>
+      <audio id="song" src={song} />
     </div>
 
   );
