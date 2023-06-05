@@ -45,7 +45,7 @@ const NavBarBottom = () => {
       href: '/album',
       func: (e:any) => {
         e.preventDefault();
-        dispatch(setPage('home'));
+        dispatch(setPage('playlists'));
       }
     },
     {

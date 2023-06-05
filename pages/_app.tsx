@@ -9,6 +9,7 @@ import store from '@/Redux/store';
 import { Provider } from 'react-redux';
 import NavBarBottom from '@/components/layout/NavBarBottom';
 import MobileExplore from '@/components/layout/MobileExplore';
+import MobilePlaylists from '@/components/layout/MobilePlaylists';
 
 const App = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -36,6 +37,9 @@ const App = () => {
           </div>
           <div className="block sm:hidden">
             <MobileExplore isMobile={isMobile} />
+          </div>
+          <div className="block sm:hidden">
+            <MobilePlaylists />
           </div>
         </Layout>
       </div>

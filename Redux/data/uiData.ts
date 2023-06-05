@@ -6,7 +6,7 @@ interface explore{
 }
 const initialState:explore = {
   isMobile: false,
-  page: 'playlists'
+  page: 'home'
 };
 export const UIData = createSlice(
   {
