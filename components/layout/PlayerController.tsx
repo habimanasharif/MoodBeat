@@ -189,7 +189,7 @@ const PlayerController:React.FC<props> = ({ title, song, songNumber }) => {
     };
     audio.addEventListener('timeupdate', updateProgress);
     audio.addEventListener('ended', onSongEnd);
-  }, [progress, duration, songNumber, song]);
+  }, [progress, duration, songNumber, song, dispatch]);
 
   const playsong = (e:any) => {
     e.preventDefault();
@@ -216,7 +216,9 @@ const PlayerController:React.FC<props> = ({ title, song, songNumber }) => {
     const audio = document.getElementById('song');
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
-    audio.currentTime = (x / (rect.right - rect.left)) * duration;
+    audio.oncanplay = () => {
+      audio.currentTime = (x / (rect.right - rect.left)) * duration;
+    };
   };
   return (
     <div>
