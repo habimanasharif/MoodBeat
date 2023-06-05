@@ -1,11 +1,11 @@
 import React from 'react';
 import { useAppSelector } from '@/Redux/hooks';
-import { setIsMobile } from '@/Redux/data/uiData';
 import one from '../../public/one.jpg';
 import two from '../../public/two.jpg';
 import three from '../../public/three.jpg';
 import Player from './Player';
 import PlaylistItemList from './PlaylistItemList';
+import MobilePlayerController from './MobilePlayerController';
 
 interface playlist{
   image:any ;
@@ -37,10 +37,11 @@ const PlaylistPlayerContainer:React.FC<props> = ({ isMobile }) => {
   ];
 
   return (
-    <div className={`w-[100%] sm:w-[45%]  pr-[.1rem] sm:pr-[4.6rem]  sm:h-[80%] h-screen  ${isMobile && page === 'home' ? 'flex' : 'hidden'} flex-col `}>
-      {!setIsMobile && (<PlaylistItemList playlists={playlists} />)}
+    <div className={`w-[100%] sm:w-[45%]  pr-[.1rem] sm:pr-[4.6rem]  sm:h-[80%]  sm:bg-[transparent] bg-[#2d2e37] h-[95vh] rounded-t-[2rem] sm:rounded-t-[0rem] sm:relative absolute pin-b-0  ${(isMobile && page === 'home') || !isMobile ? 'flex' : 'hidden'} flex-col `}>
+      {!isMobile && (<PlaylistItemList playlists={playlists} />)}
 
-      <Player />
+      <Player isMobile={isMobile} />
+      {isMobile && (<MobilePlayerController />)}
     </div>
   );
 };

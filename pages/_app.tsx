@@ -32,7 +32,7 @@ const App = () => {
           <NewPlaylist isMobile={isMobile} />
           <PlaylistPlayer isMobile={isMobile} />
           <div className="hidden sm:block">
-            <Explore />
+            <Explore isMobile={isMobile} />
           </div>
           <div className="block sm:hidden">
             <MobileExplore isMobile={isMobile} />

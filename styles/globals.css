@@ -68,8 +68,14 @@ top:0;
 .pin-b{
 bottom: .5rem;
 }
+.pin-b-0{
+  bottom: 0rem;  
+}
 .pin-b-playlist{
     bottom: .5em;
+}
+.pin-controllers{
+    bottom: 15rem;
 }
 
 .playlist-img{
