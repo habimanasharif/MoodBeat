@@ -8,7 +8,7 @@ interface playlist{
     }
 
 const PlaylistItemList:React.FC<{playlists:playlist[]}> = ({ playlists }) => (
-  <div className="w-[100%] sm:h-[44%] pt-3 sm:mt-[0rem] h-screen flex flex-nowrap  overflow-x-auto  flex-gap">
+  <div className="w-[100%] sm:h-[44%] pt-3 sm:mt-[0rem] h-[45%] flex flex-nowrap  overflow-x-auto  flex-gap">
     {
           playlists.map((item:playlist, id:number) => (
             <PlaylistItem
