@@ -3,7 +3,7 @@ import Favorite from './Favorite';
 import TopArtist from './TopArtist';
 
 const MoreExploreContent = () => (
-  <div className=" w-full h-full pl-10 py-5">
+  <div className="w-full h-full pl-10 py-5 flex flex-col overflow-hidden">
     <TopArtist />
     <Favorite />
   </div>

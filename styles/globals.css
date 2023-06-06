@@ -37,6 +37,10 @@ body{
     background-color:rgba(20, 23, 42, 0.5) ;
     
 }
+.bottom-navbar-bg{
+    filter:blur(0px) saturate(180%) ;
+    background-color:rgba(20, 23, 42, 0.5) ; 
+}
 .transparent-White{
     background: rgba(251, 251, 251, 0.12);
 }
@@ -64,8 +68,14 @@ top:0;
 .pin-b{
 bottom: .5rem;
 }
+.pin-b-0{
+  bottom: 0rem;  
+}
 .pin-b-playlist{
     bottom: .5em;
+}
+.pin-controllers{
+    bottom: 15rem;
 }
 
 .playlist-img{
@@ -92,4 +102,7 @@ bottom: .5rem;
     bottom: -1.4rem;
     left: 1rem;
     right:1.1rem
+}
+.scroll-left{
+    overflow-x: auto;
 }

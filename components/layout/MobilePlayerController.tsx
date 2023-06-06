@@ -10,7 +10,7 @@ import PrevIcon from '../svg/PrevIcon';
 import RepeatIcon from '../svg/Repeat';
 import ShuffleIcon from '../svg/ShuffleIcon';
 
-const PlayerController = () => {
+const MobilePlayerController = () => {
   const [nomolizedData, setNomolizedData] = useState([]);
   const song = 'https://beats-api.onrender.com/song/play/882e74e4118ff2552d633f3c47b5d8f7.mp3';
   const [progress, setProgress] = useState(0);
@@ -159,12 +159,12 @@ const PlayerController = () => {
   };
   return (
     <div>
-      <div className="details text-center">
-        <h3 className="text-[#fff] mt-1 font-bold text-lg">Resistance</h3>
-        <p className="text-[#fff] font-thin"> Muse</p>
+      <div className="details text-center mt-3">
+        <h3 className="text-[#fff] mt-1 font-bold text-3xl">Resistance</h3>
+        <p className="text-[#fff] font-thin text-2xl"> Muse</p>
       </div>
 
-      <div className="player-controllers mt-2 flex items-center">
+      <div className="player-controllers mt-4 flex justify-center items-center">
         <div>
           <RepeatIcon />
         </div>
@@ -179,17 +179,35 @@ const PlayerController = () => {
           <ShuffleIcon />
         </div>
       </div>
-      <div className="sm:h-[0re] h-[1rem]" />
-      <div className="absolute pin-player flex player-conroller-bg rounded-[1rem] px-1 items-center">
-        <div className="font-bold text-white text-xs">2:45</div>
-        <canvas id="canvas" className="w-[90%] h-[3rem] font-thin ml-1 mr-1  " onMouseDown={getPosition} />
-        <div className="font-bold text-white text-xs">4:00</div>
+      <div className="sm:h-[0re] h-[2rem]" />
+      <div className=" flex  rounded-[1rem] px-1 items-center mx-5">
+        <div className="font-bold text-white text-lg">2:45</div>
+        <canvas id="canvas" className="w-[90%] h-[3rem] font-thin ml-3 mr-2  " onMouseDown={getPosition} />
+        <div className="font-bold text-white text-lg">4:00</div>
       </div>
       <audio id="song">
         <source src={song} type="audio/mpeg" />
       </audio>
-    </div>
+      <div className=" flex justify-center">
+        <div className="w-[80%] h-[9rem] overflow-y-auto ">
+          <h1 className="text-white">
+            The mandem too inconsiderate, five-star hotel, smokin&rsquo; cigarette
+            Mixin&rsquo; codeine up with the phenergan
+            She got thick, but she wanna get thin again
+            Drinkin&rsquo; apple cider vinegar
+            Wearin&rsquo; Skim &rsquo;cause she wanna be Kim and &rsquo;em
+            Uh, alright, I know that you&rsquo;re bad, stop actin&rsquo; innocent
+            We ain&rsquo;t got generational wealth
+            It&rsquo;s only a year that I&rsquo;ve had these millions
+            My whip could&rsquo;ve been in the Tokyo Drift &rsquo;cause it&rsquo;s fast and furious
+            I went from the Toyota Yaris to Urus, they had their chance but blew it
+            Now this gyal wan&rsquo; me in her uterus, fuck it,
+            I&rsquo;m rich, let&rsquo;s do it (Fuck it)
 
-  );
-};
-export default PlayerController;
+          </h1>
+        </div>
+      </div>
+    </div>
+  ); };
+
+export default MobilePlayerController;

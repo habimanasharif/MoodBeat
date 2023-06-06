@@ -1,12 +1,24 @@
 import React from 'react';
-import PlaylistItem from './PlaylistItem';
+import { useAppSelector } from '@/Redux/hooks';
 import one from '../../public/one.jpg';
 import two from '../../public/two.jpg';
 import three from '../../public/three.jpg';
 import Player from './Player';
+import PlaylistItemList from './PlaylistItemList';
+import MobilePlayerController from './MobilePlayerController';
 
-const PlaylistPlayerContainer = () => {
-  const playlists = [
+interface playlist{
+  image:any ;
+  title:string;
+  description:string
+  }
+  interface props{
+    isMobile:boolean;
+  }
+
+const PlaylistPlayerContainer:React.FC<props> = ({ isMobile }) => {
+  const { page } = useAppSelector((state) => state.uiData);
+  const playlists:playlist[] = [
     {
       image: one,
       title: ' The Dark Side',
@@ -25,21 +37,11 @@ const PlaylistPlayerContainer = () => {
   ];
 
   return (
-    <div className="w-[45%] pr-[4.6rem]  h-[80%] flex flex-col ">
-      <div className="w-[100%] h-[44%] flex flex-no-rwap overflow-x-auto flex-gap ">
-        {
-          playlists.map((item, id) => (
-            <PlaylistItem
-              image={item.image}
-              title={item.title}
-              description={item.description}
-              key={id}
-            />
-          ))
-        }
+    <div className={`w-[100%] sm:w-[45%]  pr-[.1rem] sm:pr-[4.6rem]  sm:h-[80%]  sm:bg-[transparent] bg-[#2d2e37] h-[95vh] rounded-t-[2rem] sm:rounded-t-[0rem] sm:relative absolute pin-b-0  ${(isMobile && page === 'home') || !isMobile ? 'flex' : 'hidden'} flex-col `}>
+      {!isMobile && (<PlaylistItemList playlists={playlists} />)}
 
-      </div>
-      <Player />
+      <Player isMobile={isMobile} />
+      {isMobile && (<MobilePlayerController />)}
     </div>
   );
 };
