@@ -8,7 +8,7 @@ import MoreExploreContent from './MoreExploreContent';
 const Explore:React.FC<{isMobile:boolean}> = ({ isMobile }) => {
   const { panelSize } = useAppSelector((state) => state.exploreData);
   return (
-    <div className={`absolute pin-x w-[${panelSize}%]  px-2 py-2 transtion  h-full overflow-hidden`}>
+    <div className={`absolute pin-x  ${panelSize > 60 ? 'w-[100%]' : 'w-[60%]'} px-2 py-2 transtion  h-full overflow-hidden`}>
       <div className="w-[100%] h-full bg-[#fff] py-8 px-12 rounded-[2rem] overflow-hidden ">
         <ExploreHeader />
         <div className="flex h-[100%]">
@@ -20,7 +20,7 @@ const Explore:React.FC<{isMobile:boolean}> = ({ isMobile }) => {
             </div>
             <Songs isMobile={isMobile} />
           </div>
-          <div className={`w-[${panelSize > 60 ? 40 : 0}%] transition`}>
+          <div className={` ${panelSize > 60 ? 'w-[40%]' : 'w-[0%]'} transition`}>
             {panelSize > 60 ? <MoreExploreContent /> : ''}
 
           </div>
