@@ -160,11 +160,11 @@ const MobilePlayerController = () => {
   return (
     <div>
       <div className="details text-center mt-3">
-        <h3 className="text-[#fff] mt-1 font-bold text-3xl">Resistance</h3>
-        <p className="text-[#fff] font-thin text-2xl"> Muse</p>
+        <h3 className="text-[#fff] mt-1 font-bold text-3xl max-[380px]:text-xl">Resistance</h3>
+        <p className="text-[#fff] font-thin text-2xl max-[380px]:text-lg"> Muse</p>
       </div>
 
-      <div className="player-controllers mt-4 flex justify-center items-center">
+      <div className="player-controllers mt-4 max-[380px]:mt-1 flex justify-center items-center">
         <div>
           <RepeatIcon />
         </div>
@@ -179,17 +179,17 @@ const MobilePlayerController = () => {
           <ShuffleIcon />
         </div>
       </div>
-      <div className="sm:h-[0re] h-[2rem]" />
+      <div className="sm:h-[0re] h-[2rem] max-[380px]:h-[.3rem]" />
       <div className=" flex  rounded-[1rem] px-1 items-center mx-5">
-        <div className="font-bold text-white text-lg">2:45</div>
+        <div className="font-bold text-white text-lg max-[320px]:text-sm ">2:45</div>
         <canvas id="canvas" className="w-[90%] h-[3rem] font-thin ml-3 mr-2  " onMouseDown={getPosition} />
-        <div className="font-bold text-white text-lg">4:00</div>
+        <div className="font-bold text-white text-lg max-[320px]:text-sm ">4:00</div>
       </div>
       <audio id="song">
         <source src={song} type="audio/mpeg" />
       </audio>
       <div className=" flex justify-center">
-        <div className="w-[80%] h-[9rem] overflow-y-auto ">
+        <div className="w-[80%] max-[320px]:h-[6rem] h-[9rem] overflow-y-auto ">
           <h1 className="text-white">
             The mandem too inconsiderate, five-star hotel, smokin&rsquo; cigarette
             Mixin&rsquo; codeine up with the phenergan
