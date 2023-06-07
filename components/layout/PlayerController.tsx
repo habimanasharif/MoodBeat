@@ -12,9 +12,13 @@ import RepeatIcon from '../svg/Repeat';
 import ShuffleIcon from '../svg/ShuffleIcon';
 import PauseIcon from '../svg/Pause';
 
-const PlayerController = () => {
+interface props{
+  title: string;
+  song:string
+}
+
+const PlayerController:React.FC<props> = ({ title, song }) => {
   const [nomolizedData, setNomolizedData] = useState([]);
-  const song = 'https://beats-api.onrender.com/song/play/882e74e4118ff2552d633f3c47b5d8f7.mp3';
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -157,6 +161,10 @@ const PlayerController = () => {
     const audio = document.getElementById('song');
     const updateProgress = (e:any) => {
       const { currentTime } = e.srcElement;
+      if (duration === currentTime) {
+        audio.currentTime = 0;
+        console.log('hello');
+      }
       let curSec;
       if (Math.floor(currentTime) >= 60) {
         for (let x = 1; x <= 60; x++) {
@@ -199,7 +207,7 @@ const PlayerController = () => {
   return (
     <div>
       <div className="details text-center">
-        <h3 className="text-[#fff] mt-1 font-bold text-lg">Resistance</h3>
+        <h3 className="text-[#fff] mt-1 font-bold text-lg">{title}</h3>
         <p className="text-[#fff] font-thin"> Muse</p>
       </div>
 
