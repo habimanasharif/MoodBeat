@@ -20,7 +20,7 @@ const Explore:React.FC<{isMobile:boolean}> = ({ isMobile }) => {
             </div>
             <Songs isMobile={isMobile} />
           </div>
-          <div className={` ${panelSize > 60 ? 'w-[40%]' : 'w-[0%]'} transition`}>
+          <div className={` ${panelSize > 60 ? 'w-[40%]' : 'w-[0%]'} transition py-3`}>
             {panelSize > 60 ? <MoreExploreContent /> : ''}
 
           </div>
