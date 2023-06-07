@@ -3,7 +3,7 @@ import Image from 'next/image';
 import two from '../../public/two.jpg';
 
 const FavouriteCard = () => (
-  <div className="h-[11rem] sm:w-[8rem] w-[10.6rem] sm:pr-6 ">
+  <div className="h-[11rem] max-[320px]:h-[9rem] max-[380px]:h-[11rem] sm:w-[8rem] max-[320px]:w-[8.2rem] max-[380px]:w-[9.9rem] w-[10.6rem] sm:pr-6 ">
     <div className=" w-[100%] sm:h-[60%] h-[80%] sm:mr-3 mr-1 relative">
       <div className="w-[100%]  h-full">
         <div className="w-[100%] h-[100%] rounded-[1.2rem]  ">

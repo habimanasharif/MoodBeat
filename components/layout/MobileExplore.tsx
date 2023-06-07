@@ -57,10 +57,10 @@ const MobileExplore:React.FC<props> = ({ isMobile }) => {
   ];
   return (
     <div className={` absolute pin-x  w-full h-screen px-2 py-2 ${isMobile && page === 'explore' ? 'flex' : 'hidden'} flex-col overflow-hidden`}>
-      <h1 className="text-white ml-3 text-[2rem] h-[3rem] font-bold">Trending right now</h1>
+      <h1 className="text-white ml-3 text-[2rem] max-[320px]:text-[1.5rem] h-[3rem] font-bold">Trending right now</h1>
       <PlaylistItemList playlists={playlists} />
-      <div className="flex gap-[1rem] mb-3 ml-3 h-[5rem] flex-nowrap overflow-x-auto  ">
-        {categories.map((item:category, id:number) => (<h1 key={id} className=" whitespace-nowrap bg-black px-3 py-2 rounded-[1rem] shadow font-bold text-lg text-white">{item.title}</h1>))}
+      <div className="flex gap-[1rem] mb-3 ml-3 h-[5rem] max-[380px]:h-[4rem] flex-nowrap overflow-x-auto  ">
+        {categories.map((item:category, id:number) => (<h1 key={id} className=" whitespace-nowrap bg-black px-3 py-2 rounded-[1rem] shadow font-bold text-lg max-[380px]:text-sm text-white">{item.title}</h1>))}
       </div>
       <Songs isMobile />
 

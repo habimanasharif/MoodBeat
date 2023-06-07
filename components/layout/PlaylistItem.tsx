@@ -11,15 +11,15 @@ description:string
 
 const PlaylistItem:React.FC<props> = ({ image, title, description }) => (
   <div>
-    <div className=" relative w-[15rem] h-[15rem] rounded-[1.7rem] shadow-lg ml-2 ">
-      <div className="w-[100%] h-[100%] relative rounded-[1.7rem]  ">
+    <div className=" relative w-[15rem] h-[15rem] max-[320px]:h-[10.5rem] max-[320px]:w-[13rem] max-[380px]:h-[13rem] max-[380px]:w-[14rem] rounded-[1.7rem] shadow-lg ml-2 ">
+      <div className="w-[100%] h-[100%] relative rounded-[1.7rem] max-[380px]:rounded-[1rem]  ">
         <div>
           <Image
             src={image}
             alt="album Image"
             width={500}
             height={500}
-            className=" w-[100%] playlist-img  rounded-[1.7rem] absolute pin-l pin-t h-[100%]"
+            className=" w-[100%] playlist-img  rounded-[1.7rem] max-[380px]:rounded-[1rem] absolute pin-l pin-t h-[100%]"
           />
         </div>
       </div>
