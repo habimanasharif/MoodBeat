@@ -21,18 +21,17 @@ const Player:React.FC<{isMobile:boolean}> = ({ isMobile }) => {
             </div>
           </div>
         </div>
+        {!isMobile && (
         <PlayerController
           song={musicList[songNumber].audio}
           title={musicList[songNumber].title}
           songNumber={songNumber}
+          nomolizedData={musicList[songNumber].normolizedData}
+          duration={musicList[songNumber].duration}
         />
+        )}
       </div>
-      {!isMobile && (
-      <PlayerController
-        song={musicList[songNumber].audio}
-        title={musicList[songNumber].title}
-      />
-      )}
+
     </div>
   );
 };

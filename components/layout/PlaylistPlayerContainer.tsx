@@ -18,6 +18,7 @@ interface playlist{
 
 const PlaylistPlayerContainer:React.FC<props> = ({ isMobile }) => {
   const { page } = useAppSelector((state) => state.uiData);
+  const { musicList, songNumber } = useAppSelector((state) => state.musicData);
   const playlists:playlist[] = [
     {
       image: one,
@@ -41,7 +42,13 @@ const PlaylistPlayerContainer:React.FC<props> = ({ isMobile }) => {
       {!isMobile && (<PlaylistItemList playlists={playlists} />)}
 
       <Player isMobile={isMobile} />
-      {isMobile && (<MobilePlayerController />)}
+      {isMobile && (
+      <MobilePlayerController
+        song={musicList[songNumber].audio}
+        title={musicList[songNumber].title}
+        songNumber={songNumber}
+      />
+      )}
     </div>
   );
 };

@@ -18,13 +18,15 @@ interface props{
   title: string;
   song:string;
   songNumber:number;
+  nomolizedData:number[];
+  duration:number;
 }
 
-const PlayerController:React.FC<props> = ({ title, song, songNumber }) => {
+const PlayerController:React.FC<props> = ({
+  title, song, songNumber, nomolizedData, duration
+}) => {
   const dispatch = useAppDispatch();
-  const [nomolizedData, setNomolizedData] = useState([]);
   const [progress, setProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [endTime, setEndTime] = useState('00:00');
   const [curTime, setCurTime] = useState('00:00');
@@ -104,62 +106,19 @@ const PlayerController:React.FC<props> = ({ title, song, songNumber }) => {
   }, [nomolizedData, progress]);
 
   useEffect(() => {
-    // Set up audio context
-    const audioContext = new AudioContext();
-    /**
-       * Filters the AudioBuffer retrieved from an external source
-       * @param {AudioBuffer} audioBuffer the AudioBuffer from drawAudio()
-       * @returns {Array} an array of floating point numbers
-       */
-    const filterData = (audioBuffer:any) => {
-      // We only need to work with one channel of data
-      setDuration(audioBuffer.duration);
-      let sec;
-      if (Math.floor(duration) >= 60) {
-        for (let i = 1; i <= 60; i++) {
-          if (Math.floor(duration) >= (60 * i) && Math.floor(duration) < (60 * (i + 1))) {
-            sec = Math.floor(duration) - (60 * i);
-          }
+    let sec;
+    if (Math.floor(duration) >= 60) {
+      for (let i = 1; i <= 60; i++) {
+        if (Math.floor(duration) >= (60 * i) && Math.floor(duration) < (60 * (i + 1))) {
+          sec = Math.floor(duration) - (60 * i);
         }
-      } else {
-        sec = isNaN(duration) === true ? 0 : Math.floor(duration);
       }
-      const min = isNaN(duration) === true ? 0 : Math.floor(duration / 60);
-      setEndTime(`${min}:${sec < 10 ? `0${sec}` : sec}`);
-      const rawData = audioBuffer.getChannelData(0);
-      const samples = 70; // Number of samples we want to have in our final data set
-      // the number of samples in each subdivision
-      const blockSize = Math.floor(rawData.length / samples);
-      const filteredData = [];
-      for (let i = 0; i < samples; i++) {
-        const blockStart = blockSize * i; // the location of the first sample in the block
-        let sum = 0;
-        for (let j = 0; j < blockSize; j++) {
-          sum += Math.abs(rawData[blockStart + j]); // find the sum of all the samples in the block
-        }
-        filteredData.push(sum / blockSize); // divide the sum by the block size to get the average
-      }
-      return filteredData;
-    };
-
-    /**
-       * Normalizes the audio data to make a cleaner illustration
-       * @param {Array} filteredData the data from filterData()
-       * @returns {Array} an normalized array of floating point numbers
-       */
-    const normalizeData = (filteredData:any) => {
-      const multiplier = Math.max(...filteredData) ** -1;
-      return filteredData.map((n:number) => n * multiplier);
-    };
-
-    const getFrequency = (url:string) => {
-      fetch(url)
-        .then((response) => response.arrayBuffer())
-        .then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
-        .then((audioBuffer) => setNomolizedData(normalizeData(filterData(audioBuffer))));
-    };
-    getFrequency(song);
-  }, [endTime, duration, song]);
+    } else {
+      sec = isNaN(duration) === true ? 0 : Math.floor(duration);
+    }
+    const min = isNaN(duration) === true ? 0 : Math.floor(duration / 60);
+    setEndTime(`${min}:${sec < 10 ? `0${sec}` : sec}`);
+  }, [duration]);
 
   useEffect(() => {
     const audio = document.getElementById('song');
@@ -185,17 +144,19 @@ const PlayerController:React.FC<props> = ({ title, song, songNumber }) => {
     };
     const onSongEnd = () => {
       dispatch(setSongNumber(songNumber + 1));
-      audio.play();
     };
     audio.addEventListener('timeupdate', updateProgress);
     audio.addEventListener('ended', onSongEnd);
-  }, [progress, duration, songNumber, song, dispatch]);
+    if (playing) {
+      audio.play().catch(() => {
+        /* error handler */
+      });
+    }
+  }, [progress, duration, songNumber, song, dispatch, playing]);
 
   const playsong = (e:any) => {
     e.preventDefault();
-    const audio = document.getElementById('song');
     setPlaying(true);
-    audio.play();
   };
   const pausesong = (e:any) => {
     e.preventDefault();
@@ -216,9 +177,7 @@ const PlayerController:React.FC<props> = ({ title, song, songNumber }) => {
     const audio = document.getElementById('song');
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
-    audio.oncanplay = () => {
-      audio.currentTime = (x / (rect.right - rect.left)) * duration;
-    };
+    audio.currentTime = (x / (rect.right - rect.left)) * duration;
   };
   return (
     <div>
@@ -253,7 +212,7 @@ const PlayerController:React.FC<props> = ({ title, song, songNumber }) => {
         <canvas id="canvas" className="w-[90%] h-[3rem] font-thin ml-1 mr-1  " onMouseDown={getPosition} />
         <div className="font-bold text-white text-xs">{endTime}</div>
       </div>
-      <audio id="song" src={song} />
+      <audio id="song" preload="auto" src={song} />
     </div>
 
   );
