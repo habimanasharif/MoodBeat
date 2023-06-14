@@ -70,7 +70,7 @@ const PlayerController:React.FC<props> = ({
      * @param {Array} normalizedData The filtered array returned from filterData()
      * @returns {Array} a normalized array of data
      */
-    const draw = (normalizedData:any, location:number) => {
+    const draw = (normalizedData:any, location:number): Array<any> => {
       // set up the canvas
       const canvas = document.querySelector('canvas');
       const dpr = window.devicePixelRatio || 1;

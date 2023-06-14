@@ -18,7 +18,7 @@ const initialState:musicList = {
     cover: 'https://www.premadepixels.com/wp-content/uploads/2021/09/Rebirth-Album-Cover-PP1.jpg',
     audio: 'https://beats-api.onrender.com/song/play/882e74e4118ff2552d633f3c47b5d8f7.mp3',
     title: 'Resilience',
-    duration: 265,
+    duration: 255,
     normolizedData: [
       0.21127058168690163,
       0.20844373294227778,
@@ -174,7 +174,7 @@ const initialState:musicList = {
     cover: 'https://www.premadepixels.com/wp-content/uploads/2023/05/Midi-Hits-Free-PP1.jpg',
     audio: 'https://beats-api.onrender.com/song/play/4239987637a9253ac047e33b3e628417.mpeg',
     title: 'Hot Shit',
-    duration: 265,
+    duration: 235,
     normolizedData: [
       0.26717963945822026,
       0.7330422427783218,
