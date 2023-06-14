@@ -1,28 +1,37 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable brace-style */
 // @ts-nocheck
 import React, { useEffect, useState } from 'react';
+import { useAppDispatch } from '@/Redux/hooks';
+import { setSongNumber } from '@/Redux/data/musicData';
 import PlayIcon from '../svg/play';
 import NextIcon from '../svg/NextIcon';
 import PrevIcon from '../svg/PrevIcon';
 import RepeatIcon from '../svg/Repeat';
 import ShuffleIcon from '../svg/ShuffleIcon';
+import PauseIcon from '../svg/Pause';
 
-const MobilePlayerController = () => {
-  const [nomolizedData, setNomolizedData] = useState([]);
-  const song = 'https://beats-api.onrender.com/song/play/882e74e4118ff2552d633f3c47b5d8f7.mp3';
+interface props{
+  title: string;
+  song:string;
+  songNumber:number;
+  nomolizedData:number[];
+  duration:number;
+  artist:string;
+}
+
+const MobilePlayerController:React.FC<props> = ({
+  title, song, songNumber, nomolizedData, duration, artist
+}) => {
+  const dispatch = useAppDispatch();
   const [progress, setProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const getPosition = (e:any) => {
-    e.preventDefault();
-    const canvas = document.querySelector('canvas');
-    const audio = document.getElementById('song');
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    audio.currentTime = (x / (rect.right - rect.left)) * duration;
-  };
+  const [playing, setPlaying] = useState(false);
+  const [endTime, setEndTime] = useState('00:00');
+  const [curTime, setCurTime] = useState('00:00');
+
   useEffect(() => {
     /**
      * A utility function for drawing our line segments
@@ -99,80 +108,105 @@ const MobilePlayerController = () => {
   }, [nomolizedData, progress]);
 
   useEffect(() => {
-    // Set up audio context
-    const audioContext = new AudioContext();
-    /**
-       * Filters the AudioBuffer retrieved from an external source
-       * @param {AudioBuffer} audioBuffer the AudioBuffer from drawAudio()
-       * @returns {Array} an array of floating point numbers
-       */
-    const filterData = (audioBuffer:any) => {
-      // We only need to work with one channel of data
-      setDuration(audioBuffer.duration);
-      const rawData = audioBuffer.getChannelData(0);
-      const samples = 70; // Number of samples we want to have in our final data set
-      // the number of samples in each subdivision
-      const blockSize = Math.floor(rawData.length / samples);
-      const filteredData = [];
-      for (let i = 0; i < samples; i++) {
-        const blockStart = blockSize * i; // the location of the first sample in the block
-        let sum = 0;
-        for (let j = 0; j < blockSize; j++) {
-          sum += Math.abs(rawData[blockStart + j]); // find the sum of all the samples in the block
+    let sec;
+    if (Math.floor(duration) >= 60) {
+      for (let i = 1; i <= 60; i++) {
+        if (Math.floor(duration) >= (60 * i) && Math.floor(duration) < (60 * (i + 1))) {
+          sec = Math.floor(duration) - (60 * i);
         }
-        filteredData.push(sum / blockSize); // divide the sum by the block size to get the average
       }
-      return filteredData;
-    };
-
-    /**
-       * Normalizes the audio data to make a cleaner illustration
-       * @param {Array} filteredData the data from filterData()
-       * @returns {Array} an normalized array of floating point numbers
-       */
-    const normalizeData = (filteredData:any) => {
-      const multiplier = Math.max(...filteredData) ** -1;
-      return filteredData.map((n:number) => n * multiplier);
-    };
-
-    const getFrequency = (url:string) => {
-      fetch(url)
-        .then((response) => response.arrayBuffer())
-        .then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
-        .then((audioBuffer) => setNomolizedData(normalizeData(filterData(audioBuffer))));
-    };
-    getFrequency(song);
-  }, []);
+    } else {
+      sec = isNaN(duration) === true ? 0 : Math.floor(duration);
+    }
+    const min = isNaN(duration) === true ? 0 : Math.floor(duration / 60);
+    setEndTime(`${min}:${sec < 10 ? `0${sec}` : sec}`);
+  }, [duration]);
 
   useEffect(() => {
     const audio = document.getElementById('song');
     const updateProgress = (e:any) => {
       const { currentTime } = e.srcElement;
+      if (duration === currentTime) {
+        audio.currentTime = 0;
+      }
+      let curSec;
+      if (Math.floor(currentTime) >= 60) {
+        for (let x = 1; x <= 60; x++) {
+          if (Math.floor(currentTime) >= (60 * x) && Math.floor(currentTime) < (60 * (x + 1))) {
+            curSec = Math.floor(currentTime) - (60 * x);
+          }
+        }
+      } else {
+        curSec = Math.floor(currentTime);
+      }
+      const curMin = Math.floor(currentTime / 60);
+      setCurTime(`${curMin}:${curSec < 10 ? `0${curSec}` : curSec}`);
+
       setProgress(Math.floor((currentTime / duration) * 70) + 1);
     };
+    const onSongEnd = () => {
+      dispatch(setSongNumber(songNumber + 1));
+    };
     audio.addEventListener('timeupdate', updateProgress);
-  }, [progress, duration]);
+    audio.addEventListener('ended', onSongEnd);
+    if (playing) {
+      audio.play().catch(() => {
+        /* error handler */
+      });
+    }
+  }, [progress, duration, songNumber, song, dispatch, playing]);
+
   const playsong = (e:any) => {
     e.preventDefault();
     const audio = document.getElementById('song');
     audio.play();
   };
+  const pausesong = (e:any) => {
+    e.preventDefault();
+    const audio = document.getElementById('song');
+    setPlaying(false);
+    audio.pause();
+  };
+
+  const nextSong = () => {
+    dispatch(setSongNumber(songNumber + 1));
+  };
+  const prevSong = () => {
+    dispatch(setSongNumber(songNumber - 1));
+  };
+
+  const getPosition = (e:any) => {
+    e.preventDefault();
+    const canvas = document.querySelector('canvas');
+    const audio = document.getElementById('song');
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    audio.currentTime = (x / (rect.right - rect.left)) * duration;
+  };
+
   return (
     <div>
       <div className="details text-center mt-3">
-        <h3 className="text-[#fff] mt-1 font-bold text-3xl max-[380px]:text-xl">Resistance</h3>
-        <p className="text-[#fff] font-thin text-2xl max-[380px]:text-lg"> Muse</p>
+        <h3 className="text-[#fff] mt-1 font-bold text-3xl max-[380px]:text-xl">{title}</h3>
+        <p className="text-[#fff] font-thin text-2xl max-[380px]:text-lg">
+          {artist}
+        </p>
       </div>
 
       <div className="player-controllers mt-4 max-[380px]:mt-1 flex justify-center items-center">
         <div>
           <RepeatIcon />
         </div>
-        <div className="mr-2 ml-8">
+        <div className="mr-2 ml-8" onClick={prevSong}>
           <PrevIcon />
         </div>
-        <div className="bg-[#fff] h-10 w-10 flex shadow items-center justify-center rounded-[50%]" onClick={playsong}><PlayIcon size="15" /></div>
-        <div className="ml-2 mr-8">
+        {!playing && (<div className="bg-[#fff] h-10 w-10 flex shadow items-center justify-center rounded-[50%]" onClick={playsong}><PlayIcon size="15" /></div>)}
+        {playing && (
+        <div className="bg-[#fff] h-10 w-10 flex shadow items-center justify-center rounded-[50%]" onClick={pausesong}>
+          <PauseIcon />
+        </div>
+        )}
+        <div className="ml-2 mr-8" onClick={nextSong}>
           <NextIcon />
         </div>
         <div>
@@ -181,16 +215,16 @@ const MobilePlayerController = () => {
       </div>
       <div className="sm:h-[0re] h-[2rem] max-[380px]:h-[.3rem]" />
       <div className=" flex  rounded-[1rem] px-1 items-center mx-5">
-        <div className="font-bold text-white text-lg max-[320px]:text-sm ">2:45</div>
+        <div className="font-bold text-white text-lg max-[320px]:text-sm ">{curTime}</div>
         <canvas id="canvas" className="w-[90%] h-[3rem] font-thin ml-3 mr-2  " onMouseDown={getPosition} />
-        <div className="font-bold text-white text-lg max-[320px]:text-sm ">4:00</div>
+        <div className="font-bold text-white text-lg max-[320px]:text-sm ">{endTime}</div>
       </div>
       <audio id="song">
         <source src={song} type="audio/mpeg" />
       </audio>
       <div className=" flex justify-center">
-        <div className="w-[80%] max-[320px]:h-[6rem] h-[9rem] overflow-y-auto ">
-          <h1 className="text-white">
+        <div className="w-[80%] max-[320px]:h-[6rem] h-[11rem] overflow-y-auto ">
+          <h1 className="text-white max-[380px]:text-sm text-lg">
             The mandem too inconsiderate, five-star hotel, smokin&rsquo; cigarette
             Mixin&rsquo; codeine up with the phenergan
             She got thick, but she wanna get thin again
