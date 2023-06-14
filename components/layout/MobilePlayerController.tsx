@@ -223,8 +223,8 @@ const MobilePlayerController:React.FC<props> = ({
         <source src={song} type="audio/mpeg" />
       </audio>
       <div className=" flex justify-center">
-        <div className="w-[80%] max-[320px]:h-[6rem] h-[9rem] overflow-y-auto ">
-          <h1 className="text-white">
+        <div className="w-[80%] max-[320px]:h-[6rem] h-[11rem] overflow-y-auto ">
+          <h1 className="text-white max-[380px]:text-sm text-lg">
             The mandem too inconsiderate, five-star hotel, smokin&rsquo; cigarette
             Mixin&rsquo; codeine up with the phenergan
             She got thick, but she wanna get thin again
