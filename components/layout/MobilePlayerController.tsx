@@ -158,8 +158,7 @@ const MobilePlayerController:React.FC<props> = ({
 
   const playsong = (e:any) => {
     e.preventDefault();
-    const audio = document.getElementById('song');
-    audio.play();
+    setPlaying(true);
   };
   const pausesong = (e:any) => {
     e.preventDefault();
