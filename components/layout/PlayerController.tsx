@@ -20,10 +20,11 @@ interface props{
   songNumber:number;
   nomolizedData:number[];
   duration:number;
+  artist:string;
 }
 
 const PlayerController:React.FC<props> = ({
-  title, song, songNumber, nomolizedData, duration
+  title, song, songNumber, nomolizedData, duration, artist
 }) => {
   const dispatch = useAppDispatch();
   const [progress, setProgress] = useState(0);
@@ -183,7 +184,7 @@ const PlayerController:React.FC<props> = ({
     <div>
       <div className="details text-center">
         <h3 className="text-[#fff] mt-1 font-bold text-lg">{title}</h3>
-        <p className="text-[#fff] font-thin"> Muse</p>
+        <p className="text-[#fff] font-thin">{artist}</p>
       </div>
 
       <div className="player-controllers mt-2 flex items-center">

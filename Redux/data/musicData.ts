@@ -6,6 +6,7 @@ interface music{
   title: string;
   normolizedData:number[]
   duration:number
+  artist:string
 
 }
 
@@ -18,6 +19,7 @@ const initialState:musicList = {
     cover: 'https://www.premadepixels.com/wp-content/uploads/2021/09/Rebirth-Album-Cover-PP1.jpg',
     audio: 'https://beats-api.onrender.com/song/play/882e74e4118ff2552d633f3c47b5d8f7.mp3',
     title: 'Resilience',
+    artist: 'Muse',
     duration: 255,
     normolizedData: [
       0.21127058168690163,
@@ -96,6 +98,7 @@ const initialState:musicList = {
     cover: 'https://www.premadepixels.com/wp-content/uploads/2023/05/Gunz-Roses-PP1.jpg',
     audio: 'https://beats-api.onrender.com/song/play/b1100cf488e25d1ed4283ffbf9d89bb0.mp3',
     title: 'One Up',
+    artist: 'Lil Baby',
     duration: 265,
     normolizedData: [
       0.0520257634408546,
@@ -175,6 +178,7 @@ const initialState:musicList = {
     audio: 'https://beats-api.onrender.com/song/play/4239987637a9253ac047e33b3e628417.mpeg',
     title: 'Hot Shit',
     duration: 235,
+    artist: 'Cardi B',
     normolizedData: [
       0.26717963945822026,
       0.7330422427783218,

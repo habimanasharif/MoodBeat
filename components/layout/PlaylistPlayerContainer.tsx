@@ -46,6 +46,7 @@ const PlaylistPlayerContainer:React.FC<props> = ({ isMobile }) => {
       <MobilePlayerController
         song={musicList[songNumber].audio}
         title={musicList[songNumber].title}
+        artist={musicList[songNumber].artist}
         songNumber={songNumber}
         nomolizedData={musicList[songNumber].normolizedData}
         duration={musicList[songNumber].duration}

@@ -28,6 +28,7 @@ const Player:React.FC<{isMobile:boolean}> = ({ isMobile }) => {
           songNumber={songNumber}
           nomolizedData={musicList[songNumber].normolizedData}
           duration={musicList[songNumber].duration}
+          artist={musicList[songNumber].artist}
         />
         )}
       </div>
